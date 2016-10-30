@@ -2,7 +2,7 @@
  
  Il y a en fait trois recettes en une: la ragout, la béchamel et les lasanges.
  
- ## Ingrédients
+## Ingrédients
  
  *Pour le ragout, pour un plat (6 personnes)*
  - Une barquette (env 400g) de viande de boeuf hachée 5% de matière grasse,
@@ -38,7 +38,7 @@
  - De la pancetta
  
  
- ## Le ragout
+## Le ragout
  
  1. Hacher en petit dés l'ail, l'oignon, l'échalotte et la carotte. Les faire revenir dans de l'huile d'olive.
  2. Dans une poêle, faire revenir la pancetta ou le bacon, puis la chair à saucisse et le boeuf. Déglacer le tout au vin rouge et laisser réduire.
@@ -47,7 +47,7 @@
  cuire la viande avant de l'ajouter à la sauce.
  5. Ajouter un peu de basilic finement ciselé.
  
- ## La béchamel
+## La béchamel
  
  1. Dans une casserole, faire fondre le beurre
  2. Ajouter la farine et laisser cuire environ 3 minutes (roux blanc)
@@ -55,7 +55,7 @@
  4. Laisser cuire à feu moyen tout en continuant de remuer
  5. Ajouter du parmesan rapé (à votre convenance) et laisser cuire pendant 1 minute.
  
- ## Préparation des lasanges
+## Préparation des lasanges
  
  Si vous utilisez des pâtes sèches, il faudra alors les faire précuire préalablement à l'assemblage.
 Faire préchauffer le four à 200°C.
