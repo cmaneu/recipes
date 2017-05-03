@@ -1,4 +1,4 @@
-*# Pâtes fraîches
+# Pâtes fraîches
 
 ## Pâte (pour 1 personne)
 
