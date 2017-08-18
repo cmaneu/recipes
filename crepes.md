@@ -14,5 +14,7 @@ Pour une quinzaine de crêpes:
 
 ## Préparation
 
-- Tout mélanger
+- Mélanger les oeufs, le beurre, le sucre et le sel
+- Incorporer à la farine, et mélanger
+- Ajouter le lait petit à petit
 - Faire cuire (induction 7)
