@@ -15,5 +15,5 @@
 - Laisse reposer 30 minutes.
 - Dans un autre récipient, mélange le reste de farine avec le sel et le reste d’eau tiède et ajoute le mélange précédent. 
 - Pétrir pendant 10-15 minutes, puis laisser reposer au chaud pendant 2 heures. 
-- Quand tu étaleras la pâte, tu peux la laisser reposer de nouveau 1à-15 minutes une fois étalée.
-- Quand tu feras ta pizza, compte 20 à 30 minutes de cuisson à 250°C
+- Quand tu étaleras la pâte, tu peux la laisser reposer de nouveau 15 minutes une fois étalée.
+- Quand tu feras ta pizza, compte 12 à 15 minutes de cuisson à 180°C
