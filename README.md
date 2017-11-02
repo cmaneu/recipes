@@ -9,6 +9,7 @@ Voici quelques unes de "mes" recettes de cuisine. C'est surtout là pour moi, ma
 
 - [Cake au chorizo](./snacks/cake-chorizo.md)
 - [Quiche lorraine](./snacks/quiche.md)
+- [Roulés au chorizo](./snacks/roules-chorizo.md)
 
 ## Plats
 
