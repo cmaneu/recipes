@@ -7,22 +7,22 @@ Voici quelques unes de "mes" recettes de cuisine. C'est surtout là pour moi, ma
 
 ## Entrées
 
-- [Cake au chorizo](./cake-chorizo.md)
-- [Quiche lorraine](./quiche.md)
+- [Cake au chorizo](./snacks/cake-chorizo.md)
+- [Quiche lorraine](./snacks/quiche.md)
 
 ## Plats
 
-- [Pâtes Carbonara](./carbonara.md)
-- [Lasagnes](./lasagnes.md)
-- [Pad Thaï Poulet](./pad-thai.md)
-- [Pâtes fraîches](./pates-fraiches.md)
-- [Pâte à pizza](./pate-pizza.md)
+- [Pâtes Carbonara](./plats/carbonara.md)
+- [Lasagnes](./plats/lasagnes.md)
+- [Pad Thaï Poulet](./plats/pad-thai.md)
+- [Pâtes fraîches](./plats/pates-fraiches.md)
+- [Pâte à pizza](./plats/pate-pizza.md)
 
 ## Desserts & sucré
 
-- [Cookies](./cookie.md)
-- [Crêpes](./crepes.md)
-- [Henneke](./henneke.md)
-- [Pancakes](./pancakes.md)
-- [Mug cake Cookies](./mug cake cookie.md)
-- [Mug cake Crème de marrons](./mug cake marrons.md)
+- [Cookies](./patisserie/cookie.md)
+- [Crêpes](./patisserie/crepes.md)
+- [Henneke](./patisserie/henneke.md)
+- [Pancakes](./patisserie/pancakes.md)
+- [Mug cake Cookies](./patisserie/mug cake cookie.md)
+- [Mug cake Crème de marrons](./patisserie/mug cake marrons.md)
