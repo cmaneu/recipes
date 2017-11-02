@@ -24,5 +24,5 @@ Voici quelques unes de "mes" recettes de cuisine. C'est surtout là pour moi, ma
 - [Crêpes](./patisserie/crepes.md)
 - [Henneke](./patisserie/henneke.md)
 - [Pancakes](./patisserie/pancakes.md)
-- [Mug cake Cookies](./patisserie/mug cake cookie.md)
-- [Mug cake Crème de marrons](./patisserie/mug cake marrons.md)
+- [Mug cake Cookies]('./patisserie/mug cake cookie.md')
+- [Mug cake Crème de marrons]('./patisserie/mug cake marrons.md')
