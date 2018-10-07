@@ -1,5 +1,7 @@
 # Pancakes
 
+![pancakes.jpg](pancakes.jpg)
+
 ## Ingrédients
 Pour 2 personnes (12 pancakes)
 
