@@ -1,22 +1,21 @@
 # Pancakes
 
 ## Ingrédients
+Pour 2 personnes (12 pancakes)
 
-- 250g de farine
-- 1 sachet de levure chimique
+- 150g de farine
+- 1 cuillière à café bombée de levure chimique
 - 1 sachet de sucre vanillé
-- 50g de beurre
-- 150ml de lait
-- 1 pincée de sel
-- 3 oeufs entiers
-- 70g de sucre
+- 1 cuillière à soupe de beurre
+- 200ml de lait
+- 1 oeuf entier
+- 1 cuillière à soupe de sucre blanc
 
 ## Etapes
 
-- Battre, au fouet, les oeufs avec le sucre et le sel, 
-- Ajouter le lait, 
-- Ajouter le beurre, 
-- Ajouter la farine, 
-- Ajouter la levure, 
+- Battre, au fouet, les oeufs avec le sucre, 
+- Ajouter le beurre,
+- Mélanger la farine et la levure, puis l'incorporer
+- Ajouter progressivement le lait, 
 - Laisser reposer la pâte pendant au moins 30 min
 - Faire cuire les pancakes 2min sur chaque face
