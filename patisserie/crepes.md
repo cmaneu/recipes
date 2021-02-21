@@ -19,3 +19,20 @@ Pour une quinzaine de crêpes:
 - Incorporer les oeufs un par un
 - Ajouter le lait petit à petit
 - Faire cuire (induction 6)
+
+# Crêpes sucrées de Nico
+
+## Ingrédients
+- 1kg de farine
+- 12 oeufs
+- 1 litre de lait
+- 1 biere
+- Zestes de citron / d'orange
+
+## Préparation
+- Tamiser la farine
+- Mettre les oeufs avant la farine
+- Compléter avec le lait
+- Ajouter la bière
+- Laisser reposer
+- Ajouter de l'eau si besoin afin que la pate soit liquide
