@@ -28,3 +28,16 @@ Voici quelques unes de "mes" recettes de cuisine. C'est surtout là pour moi, ma
 - [Mug cake Cookies](./patisserie/mug-cake-cookie.md)
 - [Mug cake Crème de marrons](./patisserie/mug-cake-marrons.md)
 - [Moelleux Pommes Cannelle](./patisserie/moelleux-pommes-cannelle.md)
+
+
+## Todo
+
+- https://cuisineplurielle.com/archives/2012/01/20/cristallines-de-pommes-vertes-sorbet-pommes-vertes-cf-michel-trama/
+- https://odelices.ouest-france.fr/recette/pate-praline-maison-facile-r4119/
+- https://cuisine.journaldesfemmes.fr/recette/318006-baba-au-rhum-la-meilleure-recette
+- https://gourmantissimes.com/pate-a-choux-tous-les-secrets-de-sa-reussite/
+- https://www.mycake.fr/chantilly-mascarpone/
+- https://www.gourmandiseries.fr/bouchees-mangue-chantilly-rhum/
+- http://lespetitesdouceurs-emilie.over-blog.com/article-chantilly-a-la-vanille-et-au-rhum-85634121.html
+- https://cuisine.journaldesfemmes.fr/recette/310899-moelleux-pommes-cannelle
+- https://www.750g.com/macarons-a-la-vanille-r90447.htm
