@@ -9,7 +9,7 @@
 - 110-120g de beurre
 - 160g de farine
 - 1/2 sachet de levure
-- 100g de chocolat noir (pépites, 51% de cacao) - Recette de base 150g 
+- 55-100g de chocolat noir (pépites, 51% de cacao) - Recette de base 150g 
 - (optionnel) 2 c-à-soupe de rhum
 
 ## Préparation
