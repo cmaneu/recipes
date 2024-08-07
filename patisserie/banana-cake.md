@@ -12,6 +12,20 @@
 - 55-100g de chocolat noir (pépites, 51% de cacao) - Recette de base 150g 
 - (optionnel) 2 c-à-soupe de rhum
 
+## Ingrédients - version plus végé/allégée
+> Bon au goût, mais texture à corriger
+
+- 4 Bananes bien mûres
+- 3 Oeufs
+- 20g de cassonade (pour monter en neige les blancs)
+- 40-50g de sucre de fleur de coco
+- 60g de beurre de cacahuette
+- 100g de beurre
+- 160g de farine
+- 1/2 sachet de levure
+- 60g de chocolat noir (pépites, 51% de cacao) - Recette de base 150g 
+- (optionnel) 2 c-à-soupe de rhum
+
 ## Préparation
 
 1. Préchauffer le four à 180° C
