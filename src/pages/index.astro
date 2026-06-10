@@ -1,0 +1,62 @@
+---
+import Layout from '../layouts/Layout.astro';
+import { getRecipesByCategory } from '../lib/recipes';
+
+const categories = await getRecipesByCategory();
+const total = categories.reduce((sum, c) => sum + c.recipes.length, 0);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+---
+
+<Layout title="recipes — cmaneu">
+  <header class="mb-6">
+    <pre class="text-term-green whitespace-pre-wrap leading-tight">{`                _
+  _ __ ___  ___(_)_ __   ___  ___
+ | '__/ _ \\/ __| | '_ \\ / _ \\/ __|
+ | | |  __/ (__| | |_) |  __/\\__ \\
+ |_|  \\___|\\___|_| .__/ \\___||___/
+                 |_|`}</pre>
+    <p class="mt-3 text-term-dim">
+      Mes recettes (et celles que j'ai chipées). {total} recettes au menu.
+    </p>
+  </header>
+
+  <p class="mb-6 text-term-dim">
+    <span class="text-term-green">visitor@kitchen</span>:<span class="text-term-cyan"
+      >~/recipes</span
+    >$ <span class="text-term-fg">ls -R</span>
+  </p>
+
+  <div class="space-y-7">
+    {
+      categories.map((category) => (
+        <section>
+          <h2 class="mb-2 text-term-amber">
+            <span class="text-term-dim">drwxr-xr-x</span> {category.dir}/
+            <span class="text-term-dim text-xs">
+              # {category.label} ({category.recipes.length})
+            </span>
+          </h2>
+          <ul class="space-y-1">
+            {category.recipes.map(({ recipe, title }) => (
+              <li class="flex items-baseline gap-2">
+                <span class="text-term-green select-none">-rw-r--r--</span>
+                <a
+                  class="text-term-cyan underline-offset-4 hover:text-term-green hover:underline"
+                  href={`${base}/${recipe.id}`}
+                >
+                  {title}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+
+  <p class="mt-8 text-term-dim">
+    <span class="text-term-green">visitor@kitchen</span>:<span class="text-term-cyan"
+      >~/recipes</span
+    >$ <span class="cursor"></span>
+  </p>
+</Layout>

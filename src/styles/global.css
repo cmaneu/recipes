@@ -1,0 +1,131 @@
+@import 'tailwindcss';
+
+@theme {
+  --font-mono:
+    'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, 'SF Mono',
+    Menlo, Consolas, 'Liberation Mono', monospace;
+
+  --color-term-bg: #0b0e14;
+  --color-term-panel: #11151c;
+  --color-term-border: #1f2933;
+  --color-term-fg: #c5c8c6;
+  --color-term-dim: #6b7280;
+  --color-term-green: #8ae234;
+  --color-term-cyan: #34e2e2;
+  --color-term-amber: #fce94f;
+}
+
+:root {
+  color-scheme: dark;
+}
+
+html {
+  scrollbar-color: var(--color-term-border) var(--color-term-bg);
+}
+
+body {
+  background-color: var(--color-term-bg);
+  color: var(--color-term-fg);
+  font-family: var(--font-mono);
+}
+
+/* Rendered recipe markdown content. */
+.recipe h1 {
+  color: var(--color-term-green);
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.recipe h2 {
+  color: var(--color-term-amber);
+  font-size: 1.15rem;
+  font-weight: 600;
+  margin-top: 1.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.recipe h2::before {
+  content: '## ';
+  color: var(--color-term-dim);
+}
+
+.recipe p {
+  margin: 0.75rem 0;
+}
+
+.recipe ul,
+.recipe ol {
+  margin: 0.75rem 0;
+  padding-left: 1.25rem;
+}
+
+.recipe ul {
+  list-style: none;
+  padding-left: 0;
+}
+
+.recipe ul > li {
+  position: relative;
+  padding-left: 1.5rem;
+}
+
+.recipe ul > li::before {
+  content: '-';
+  position: absolute;
+  left: 0.25rem;
+  color: var(--color-term-green);
+}
+
+.recipe ol {
+  list-style: decimal;
+}
+
+.recipe li {
+  margin: 0.35rem 0;
+}
+
+.recipe a {
+  color: var(--color-term-cyan);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+}
+
+.recipe a:hover {
+  color: var(--color-term-green);
+}
+
+.recipe img {
+  margin: 1.25rem 0;
+  max-width: 100%;
+  height: auto;
+  border-radius: 0.5rem;
+  border: 1px solid var(--color-term-border);
+}
+
+.recipe code {
+  background: rgba(255, 255, 255, 0.06);
+  padding: 0.1rem 0.35rem;
+  border-radius: 0.25rem;
+}
+
+.recipe blockquote {
+  border-left: 2px solid var(--color-term-border);
+  padding-left: 1rem;
+  color: var(--color-term-dim);
+  margin: 1rem 0;
+}
+
+/* Blinking terminal cursor used after prompts. */
+.cursor::after {
+  content: '▋';
+  margin-left: 0.15rem;
+  color: var(--color-term-green);
+  animation: blink 1s step-end infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
