@@ -1,6 +1,6 @@
 # Pad-Thaï
 
-![pad-thai.jpg](pad-thai.jpg)
+![pad-thai.jpg](../pad-thai.jpg)
 
 ## Ingrédients
 

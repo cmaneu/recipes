@@ -1,6 +1,6 @@
 # Pancakes
 
-![pancakes.jpg](pancakes.jpg)
+![pancakes.jpg](../pancakes.jpg)
 
 [From Mes envies culinaires](https://www.mesinspirationsculinaires.com/article-recette-pancakes-de-cyril-lignac.html)
 

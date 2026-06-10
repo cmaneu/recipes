@@ -1,6 +1,6 @@
 # American cookie
 
-![cookie.jpg](cookie.jpg)
+![cookie.jpg](../cookie.jpg)
 
 ## Ingrédients
 
