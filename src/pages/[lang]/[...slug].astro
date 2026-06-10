@@ -1,0 +1,84 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+import LangSwitcher from '../../components/LangSwitcher.astro';
+import {
+  categoryOf,
+  localeOf,
+  slugOf,
+  titleOf,
+  categoryLabel,
+} from '../../lib/recipes';
+import { LOCALES, t, type Locale } from '../../i18n';
+
+export async function getStaticPaths() {
+  const recipes = await getCollection('recipes');
+
+  // Locales available for each `<category>/<slug>` pair, so the language
+  // switcher only links to translations that actually exist.
+  const localesByKey = new Map<string, Set<Locale>>();
+  for (const recipe of recipes) {
+    const key = `${categoryOf(recipe)}/${slugOf(recipe)}`;
+    const set = localesByKey.get(key) ?? new Set<Locale>();
+    set.add(localeOf(recipe));
+    localesByKey.set(key, set);
+  }
+
+  return recipes.map((recipe) => {
+    const key = `${categoryOf(recipe)}/${slugOf(recipe)}`;
+    return {
+      params: { lang: localeOf(recipe), slug: key },
+      props: { recipe, availableLocales: [...(localesByKey.get(key) ?? [])] },
+    };
+  });
+}
+
+const { recipe, availableLocales } = Astro.props;
+const { Content } = await render(recipe);
+
+const lang = localeOf(recipe);
+const labels = t(lang);
+const title = titleOf(recipe);
+const dir = categoryOf(recipe);
+const slug = slugOf(recipe);
+const label = categoryLabel(dir, lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const githubUrl = `https://github.com/cmaneu/recipes/blob/main/${recipe.id}.md`;
+
+// Link each locale to its translation of this recipe when one exists.
+const available = new Set<Locale>(availableLocales);
+const hrefs = Object.fromEntries(
+  LOCALES.map((locale) => [
+    locale,
+    available.has(locale) ? `${base}/${locale}/${dir}/${slug}` : null,
+  ]),
+) as Record<Locale, string | null>;
+---
+
+<Layout title={`${title} — recipes`} description={labels.recipeMeta(title)} lang={lang}>
+  <div class="mb-6 flex justify-end">
+    <LangSwitcher current={lang} hrefs={hrefs} />
+  </div>
+
+  <p class="mb-6 text-term-dim">
+    <span class="text-term-green">visitor@kitchen</span>:<span class="text-term-cyan"
+      >~/recipes/{dir}</span
+    >$ <span class="text-term-fg">{labels.catCommand(`${slug}.md`)}</span>
+  </p>
+
+  <p class="mb-6 text-xs text-term-dim">
+    <a class="hover:text-term-green" href={`${base}/${lang}`}>{labels.cdUp}</a>
+    <span class="mx-2">·</span>
+    <span class="text-term-amber">{label}</span>
+  </p>
+
+  <article class="recipe">
+    <Content />
+  </article>
+
+  <div class="mt-10 border-t border-term-border pt-4 text-xs text-term-dim">
+    <a class="hover:text-term-green" href={`${base}/${lang}`}>{labels.backToList}</a>
+    <span class="mx-2">·</span>
+    <a class="hover:text-term-green" href={githubUrl}>{labels.viewOnGitHub}</a>
+  </div>
+</Layout>

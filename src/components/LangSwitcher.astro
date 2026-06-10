@@ -1,0 +1,38 @@
+---
+import { LOCALES, LOCALE_NAMES, t, type Locale } from '../i18n';
+
+interface Props {
+  /** Currently active locale. */
+  current: Locale;
+  /** Absolute href for each locale, or null when no translation exists. */
+  hrefs: Record<Locale, string | null>;
+}
+
+const { current, hrefs } = Astro.props;
+const labels = t(current);
+---
+
+<nav class="text-xs text-term-dim" aria-label={labels.switchLanguage}>
+  <span class="select-none">{labels.switchLanguage}:</span>
+  {
+    LOCALES.map((locale) => {
+      const href = hrefs[locale];
+      const name = LOCALE_NAMES[locale];
+      if (locale === current) {
+        return <span class="ml-2 text-term-green">[{name}]</span>;
+      }
+      if (href) {
+        return (
+          <a class="ml-2 hover:text-term-green" href={href}>
+            {name}
+          </a>
+        );
+      }
+      return (
+        <span class="ml-2 opacity-50 line-through" title="no translation">
+          {name}
+        </span>
+      );
+    })
+  }
+</nav>

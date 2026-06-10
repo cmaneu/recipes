@@ -1,6 +1,6 @@
 # Amaretti
 
-![amaretti.jpeg](amaretti.jpeg)
+![amaretti.jpeg](../amaretti.jpeg)
 
 ## Ingredients
 
