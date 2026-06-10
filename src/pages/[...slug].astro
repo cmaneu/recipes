@@ -1,0 +1,46 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../layouts/Layout.astro';
+import { categoryOf, titleOf, CATEGORIES } from '../lib/recipes';
+
+export async function getStaticPaths() {
+  const recipes = await getCollection('recipes');
+  return recipes.map((recipe) => ({
+    params: { slug: recipe.id },
+    props: { recipe },
+  }));
+}
+
+const { recipe } = Astro.props;
+const { Content } = await render(recipe);
+
+const title = titleOf(recipe);
+const dir = categoryOf(recipe);
+const label = CATEGORIES.find((c) => c.dir === dir)?.label ?? dir;
+const base = import.meta.env.BASE_URL;
+const githubUrl = `https://github.com/cmaneu/recipes/blob/main/${recipe.id}.md`;
+---
+
+<Layout title={`${title} — recipes`} description={`Recette : ${title}`}>
+  <p class="mb-6 text-term-dim">
+    <span class="text-term-green">visitor@kitchen</span>:<span class="text-term-cyan"
+      >~/recipes/{dir}</span
+    >$ <span class="text-term-fg">cat {recipe.id.split('/').pop()}.md</span>
+  </p>
+
+  <p class="mb-6 text-xs text-term-dim">
+    <a class="hover:text-term-green" href={base}>cd ..</a>
+    <span class="mx-2">·</span>
+    <span class="text-term-amber">{label}</span>
+  </p>
+
+  <article class="recipe">
+    <Content />
+  </article>
+
+  <div class="mt-10 border-t border-term-border pt-4 text-xs text-term-dim">
+    <a class="hover:text-term-green" href={base}>← retour à la liste</a>
+    <span class="mx-2">·</span>
+    <a class="hover:text-term-green" href={githubUrl}>voir sur GitHub</a>
+  </div>
+</Layout>

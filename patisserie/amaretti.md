@@ -1,6 +1,6 @@
 # Amaretti
 
-![](./patisserie/amaretti.jpeg)
+![amaretti.jpeg](amaretti.jpeg)
 
 ## Ingredients
 
