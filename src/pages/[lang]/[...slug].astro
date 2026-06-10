@@ -1,7 +1,6 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import LangSwitcher from '../../components/LangSwitcher.astro';
 import {
   categoryOf,
   localeOf,
@@ -55,11 +54,7 @@ const hrefs = Object.fromEntries(
 ) as Record<Locale, string | null>;
 ---
 
-<Layout title={`${title} — recipes`} description={labels.recipeMeta(title)} lang={lang}>
-  <div class="mb-6 flex justify-end">
-    <LangSwitcher current={lang} hrefs={hrefs} />
-  </div>
-
+<Layout title={`${title} — recipes`} description={labels.recipeMeta(title)} lang={lang} hrefs={hrefs}>
   <p class="mb-6 text-term-dim">
     <span class="text-term-green">visitor@kitchen</span>:<span class="text-term-cyan"
       >~/recipes/{dir}</span

@@ -1,6 +1,5 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import LangSwitcher from '../../components/LangSwitcher.astro';
 import { getRecipesByCategory, recipePath } from '../../lib/recipes';
 import { LOCALES, t, type Locale } from '../../i18n';
 
@@ -21,11 +20,8 @@ const hrefs = Object.fromEntries(
 ) as Record<Locale, string | null>;
 ---
 
-<Layout title={labels.siteTitle} description={labels.metaDescription} lang={lang}>
+<Layout title={labels.siteTitle} description={labels.metaDescription} lang={lang} hrefs={hrefs}>
   <header class="mb-6">
-    <div class="mb-3 flex justify-end">
-      <LangSwitcher current={lang} hrefs={hrefs} />
-    </div>
     <pre class="text-term-green whitespace-pre-wrap leading-tight">{`                _
   _ __ ___  ___(_)_ __   ___  ___
  | '__/ _ \\/ __| | '_ \\ / _ \\/ __|
