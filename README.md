@@ -30,6 +30,7 @@ Vous pouvez aussi parcourir directement les recettes ci-dessous sur GitHub. Chaq
 
 - [Amaretti](./patisserie/fr/amaretti.md) · [EN](./patisserie/en/amaretti.md)
 - [Banana cake](./patisserie/fr/banana-cake.md) · [EN](./patisserie/en/banana-cake.md)
+- [Pain à la banane sans sucre](./patisserie/fr/banana-bread-sans-sucre.md) · [EN](./patisserie/en/banana-bread-sans-sucre.md)
 - [Boules Coco](./patisserie/fr/boules-coco.md) · [EN](./patisserie/en/boules-coco.md)
 - [Brownie Banane et Beurre de Cacahuète Sans Sucre Ajouté](./patisserie/fr/brownie-sans-sucres.md) · [EN](./patisserie/en/brownie-sans-sucres.md)
 - [Cinnamon roll](./patisserie/fr/cinnamon-roll.md) · [EN](./patisserie/en/cinnamon-roll.md)
