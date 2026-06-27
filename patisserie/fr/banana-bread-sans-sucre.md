@@ -1,5 +1,7 @@
 # Pain à la banane sans sucre
 
+![Pain à la banane sans sucre](https://github.com/user-attachments/assets/cd31f376-cdb9-4630-b957-1ff97056b689)
+
 ## Ingrédients
 
 - 3 bananes bien mûres

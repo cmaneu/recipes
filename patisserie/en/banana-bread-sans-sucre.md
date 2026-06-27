@@ -1,5 +1,7 @@
 # Sugar-free banana bread
 
+![Sugar-free banana bread](https://github.com/user-attachments/assets/cd31f376-cdb9-4630-b957-1ff97056b689)
+
 ## Ingredients
 
 - 3 very ripe bananas
