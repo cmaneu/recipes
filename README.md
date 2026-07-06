@@ -25,6 +25,7 @@ Vous pouvez aussi parcourir directement les recettes ci-dessous sur GitHub. Chaq
 - [Pad-Thaï](./plats/fr/pad-thai.md) · [EN](./plats/en/pad-thai.md)
 - [Pâte à pizza](./plats/fr/pate-pizza.md) · [EN](./plats/en/pate-pizza.md)
 - [Pâtes fraîches](./plats/fr/pates-fraiches.md) · [EN](./plats/en/pates-fraiches.md)
+- [Tagliatelle chorizo & burrata](./plats/fr/tagliatelle-chorizo-burrata.md) · [EN](./plats/en/tagliatelle-chorizo-burrata.md)
 
 ## Desserts & sucré
 
