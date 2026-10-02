@@ -15,6 +15,7 @@ export const CATEGORIES: Category[] = [
   { dir: 'snacks', label: { en: 'Starters', fr: 'Entrées' } },
   { dir: 'plats', label: { en: 'Mains', fr: 'Plats' } },
   { dir: 'patisserie', label: { en: 'Desserts & sweets', fr: 'Desserts & sucré' } },
+  { dir: 'inbox', label: { en: 'Inbox', fr: 'À tester' } },
 ];
 
 /** Returns the localized label of a category for the given locale. */

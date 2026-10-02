@@ -50,6 +50,10 @@ Vous pouvez aussi parcourir directement les recettes ci-dessous sur GitHub. Chaq
 - [Pancakes](./patisserie/fr/pancakes.md) · [EN](./patisserie/en/pancakes.md)
 - [Tarte tatin](./patisserie/fr/tarte-tatin.md) · [EN](./patisserie/en/tarte-tatin.md)
 
+## À tester / Inbox
+
+- [Cookies à la banane](./inbox/fr/banana-cookies.md) · [EN: Banana Cookies](./inbox/en/banana-cookies.md)
+
 ## Le site web
 
 Le site est généré à partir des fichiers Markdown des recettes (aucun contenu n'est dupliqué) et déployé automatiquement sur GitHub Pages à chaque `push` sur `main` via le workflow [`.github/workflows/deploy.yml`](./.github/workflows/deploy.yml). La langue active fait partie de l'URL (`/en`, `/fr`) et la racine redirige vers l'anglais.
