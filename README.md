@@ -34,7 +34,7 @@ Vous pouvez aussi parcourir directement les recettes ci-dessous sur GitHub. Chaq
 - [Pain à la banane sans sucre](./patisserie/fr/banana-bread-sans-sucre.md) · [EN](./patisserie/en/banana-bread-sans-sucre.md)
 - [Boules Coco](./patisserie/fr/boules-coco.md) · [EN](./patisserie/en/boules-coco.md)
 - [Brownie Banane et Beurre de Cacahuète Sans Sucre Ajouté](./patisserie/fr/brownie-sans-sucres.md) · [EN](./patisserie/en/brownie-sans-sucres.md)
-- [Cinnamon roll](./patisserie/fr/cinnamon-roll.md) · [EN](./patisserie/en/cinnamon-roll.md)
+- [Roulés à la cannelle](./patisserie/fr/cinnamon-roll.md) · [EN](./patisserie/en/cinnamon-roll.md)
 - [American cookie](./patisserie/fr/cookie.md) · [EN](./patisserie/en/cookie.md)
 - [Crème catalane](./patisserie/fr/creme-catalane.md) · [EN](./patisserie/en/creme-catalane.md)
 - [Crêpes sucrées](./patisserie/fr/crepes.md) · [EN](./patisserie/en/crepes.md)
