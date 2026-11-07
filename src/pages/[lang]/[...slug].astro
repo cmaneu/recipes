@@ -87,6 +87,7 @@ const hrefs = Object.fromEntries(
             <span>{labels.print}</span>
           </button>
         </div>
+        {photo && <p class="photo-disclosure">{labels.photoDisclosure}</p>}
       </div>
       {
         photo && (
@@ -144,6 +145,7 @@ const hrefs = Object.fromEntries(
   .hero-actions .jump:hover { background: var(--cp-accent-hover); }
   .hero-actions .print { display: inline-flex; align-items: center; gap: 8px; background: var(--cp-surface); }
   .print svg { width: 18px; height: 18px; }
+  .hero-copy .photo-disclosure { max-width: 65ch; margin-top: 12px; }
   .hero-photo { grid-column: 1; grid-row: 1; aspect-ratio: 1; margin: 0; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface-soft); }
   .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
   .recipe-layout { display: grid; grid-template-columns: 224px minmax(0, 1fr); align-items: start; gap: 32px; padding-top: 24px; }
@@ -194,13 +196,14 @@ const hrefs = Object.fromEntries(
   @media (max-width: 640px) {
     .detail { padding-block: 12px 48px; }
     .breadcrumbs { margin-bottom: 10px; }
-    .recipe-hero { grid-template-columns: minmax(0, 1fr) clamp(96px, 32vw, 132px); grid-template-areas: "title photo" "servings photo" "actions actions"; align-items: start; gap: 8px 16px; padding-bottom: 16px; }
-    .recipe-hero.no-photo { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "servings" "actions"; }
+    .recipe-hero { grid-template-columns: minmax(0, 1fr) clamp(96px, 32vw, 132px); grid-template-areas: "title photo" "servings photo" "actions actions" "disclosure disclosure"; align-items: start; gap: 8px 16px; padding-bottom: 16px; }
+    .recipe-hero.no-photo { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "servings" "actions" "disclosure"; }
     .hero-copy { display: contents; }
     .hero-copy h1 { grid-area: title; margin: 0; font-size: clamp(28px, 9vw, 40px); }
     .servings { grid-area: servings; margin: 0; }
     .hero-actions { grid-area: actions; gap: 8px; }
     .hero-actions .jump, .hero-actions .print { padding-inline: 12px; font-size: 13px; }
+    .hero-copy .photo-disclosure { grid-area: disclosure; margin-top: 0; }
     .hero-photo { grid-area: photo; height: auto; aspect-ratio: 1; }
     .hero-photo img { height: 100%; }
   }
@@ -213,7 +216,7 @@ const hrefs = Object.fromEntries(
       --cp-accent: #05699a;
       --cp-border: #dedede;
     }
-    :global(.site-header), :global(.site-footer), :global(.skip-link), .breadcrumbs, .hero-actions, .recipe-rail, .hero-photo, .source-note { display: none !important; }
+    :global(.site-header), :global(.site-footer), :global(.skip-link), .breadcrumbs, .hero-actions, .photo-disclosure, .recipe-rail, .hero-photo, .source-note { display: none !important; }
     .detail { width: 100%; padding: 0; }
     .recipe-hero, .recipe-layout { display: block; padding-block: 12px; border: 0; }
     .recipe-content { max-width: none; }

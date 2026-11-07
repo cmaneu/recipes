@@ -71,7 +71,7 @@ npm run preview  # prévisualiser le build
 
 Le site associe automatiquement une photo à chaque recette en cherchant `<catégorie>/<slug>.jpg` (ou `.jpeg`, `.png`, `.webp`), par exemple `plats/pad-thai.jpg` pour `plats/fr/pad-thai.md`. À défaut, il utilise la première image distante du Markdown. Les photos sont converties en WebP au build.
 
-> La plupart des photos de plats (assiette sur table en bambou) sont **générées par IA** pour illustrer les recettes qui n'avaient pas de photo. Remplacez simplement le fichier par une vraie photo pour la mettre à jour.
+> La plupart des photos de plats (assiette sur table en bambou) sont **générées par IA** en attendant que je réussisse à nouveau ces recettes et puisse les photographier moi-même. Remplacez simplement le fichier par une vraie photo pour la mettre à jour.
 
 ## Todo
 

@@ -48,7 +48,10 @@ const hrefs = Object.fromEntries(
     <header class="cb-intro">
       <p class="eyebrow">01 / {labels.eyebrow}</p>
       <h1>{labels.heading}</h1>
-      <p class="muted">{labels.intro}</p>
+      <div class="cb-intro-copy">
+        <p class="muted">{labels.intro}</p>
+        <p class="photo-disclosure">{labels.photoDisclosure}</p>
+      </div>
     </header>
 
     <div class="cb-layout">
@@ -136,7 +139,9 @@ const hrefs = Object.fromEntries(
   .cb-intro { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: end; column-gap: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--cp-border); margin-bottom: 16px; }
   .cb-intro .eyebrow { grid-column: 1 / -1; margin: 0 0 4px; }
   .cb-intro h1 { font-size: clamp(30px, 3vw, 40px); letter-spacing: -.05em; margin: 0; }
-  .cb-intro p:last-child { margin: 0; max-width: 48ch; font-size: 15px; line-height: 1.45; }
+  .cb-intro-copy { max-width: 58ch; }
+  .cb-intro-copy .muted { margin: 0; font-size: 15px; line-height: 1.45; }
+  .cb-intro-copy .photo-disclosure { margin-top: 6px; }
   .cb-layout { display: grid; grid-template-columns: 248px minmax(0, 1fr); gap: 40px; align-items: start; }
   .cb-rail { position: sticky; top: 16px; padding-right: 24px; border-right: 1px solid var(--cp-border); }
   .cb-rail-title { margin-bottom: 12px; }
