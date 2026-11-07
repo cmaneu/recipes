@@ -1,5 +1,7 @@
 # Double chocolate Swiss roll
 
+![Double chocolate Swiss roll](../roule-suisse-double-chocolat.png)
+
 Serves 8
 
 - Preparation: 20 minutes

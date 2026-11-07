@@ -1,5 +1,7 @@
 # Roulé suisse au double chocolat
 
+![Roulé suisse au double chocolat](../roule-suisse-double-chocolat.png)
+
 Pour 8 personnes
 
 - Préparation : 20 minutes

@@ -48,6 +48,7 @@ Vous pouvez aussi parcourir directement les recettes ci-dessous sur GitHub. Chaq
 - [Mug cake Cookie](./patisserie/fr/mug-cake-cookie.md) · [EN](./patisserie/en/mug-cake-cookie.md)
 - [Mug cake Crème de marrons](./patisserie/fr/mug-cake-marrons.md) · [EN](./patisserie/en/mug-cake-marrons.md)
 - [Pancakes](./patisserie/fr/pancakes.md) · [EN](./patisserie/en/pancakes.md)
+- [Pancakes express banane et flocons d'avoine](./patisserie/fr/pancakes-banane-flocons-avoine.md) · [EN](./patisserie/en/pancakes-banane-flocons-avoine.md)
 - [Roulé suisse au double chocolat](./patisserie/fr/roule-suisse-double-chocolat.md) · [EN](./patisserie/en/roule-suisse-double-chocolat.md)
 - [Tarte tatin](./patisserie/fr/tarte-tatin.md) · [EN](./patisserie/en/tarte-tatin.md)
 
