@@ -1,6 +1,7 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
+import PhotoDisclosure from '../../components/PhotoDisclosure.astro';
 import { categoryOf, localeOf, slugOf, titleOf, categoryLabel } from '../../lib/recipes';
 import { photoOf } from '../../lib/photos';
 import { LOCALES, t, type Locale } from '../../i18n';
@@ -87,7 +88,7 @@ const hrefs = Object.fromEntries(
             <span>{labels.print}</span>
           </button>
         </div>
-        {photo && <p class="photo-disclosure">{labels.photoDisclosure}</p>}
+        {photo && <PhotoDisclosure text={labels.photoDisclosure} />}
       </div>
       {
         photo && (

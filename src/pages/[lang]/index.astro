@@ -1,6 +1,7 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import RecipeCard from '../../components/RecipeCard.astro';
+import PhotoDisclosure from '../../components/PhotoDisclosure.astro';
 import { getRecipesByCategory, recipePath } from '../../lib/recipes';
 import { photoOf } from '../../lib/photos';
 import { LOCALES, t, type Locale } from '../../i18n';
@@ -50,7 +51,7 @@ const hrefs = Object.fromEntries(
       <h1>{labels.heading}</h1>
       <div class="cb-intro-copy">
         <p class="muted">{labels.intro}</p>
-        <p class="photo-disclosure">{labels.photoDisclosure}</p>
+        <PhotoDisclosure text={labels.photoDisclosure} />
       </div>
     </header>
 
@@ -141,7 +142,7 @@ const hrefs = Object.fromEntries(
   .cb-intro h1 { font-size: clamp(30px, 3vw, 40px); letter-spacing: -.05em; margin: 0; }
   .cb-intro-copy { max-width: 58ch; }
   .cb-intro-copy .muted { margin: 0; font-size: 15px; line-height: 1.45; }
-  .cb-intro-copy .photo-disclosure { margin-top: 6px; }
+  .cb-intro-copy .photo-disclosure { margin-top: 8px; }
   .cb-layout { display: grid; grid-template-columns: 248px minmax(0, 1fr); gap: 40px; align-items: start; }
   .cb-rail { position: sticky; top: 16px; padding-right: 24px; border-right: 1px solid var(--cp-border); }
   .cb-rail-title { margin-bottom: 12px; }
