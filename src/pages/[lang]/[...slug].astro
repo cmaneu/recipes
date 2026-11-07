@@ -1,13 +1,9 @@
 ---
 import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import {
-  categoryOf,
-  localeOf,
-  slugOf,
-  titleOf,
-  categoryLabel,
-} from '../../lib/recipes';
+import PhotoDisclosure from '../../components/PhotoDisclosure.astro';
+import { categoryOf, localeOf, slugOf, titleOf, categoryLabel } from '../../lib/recipes';
+import { photoOf } from '../../lib/photos';
 import { LOCALES, t, type Locale } from '../../i18n';
 
 export async function getStaticPaths() {
@@ -33,7 +29,7 @@ export async function getStaticPaths() {
 }
 
 const { recipe, availableLocales } = Astro.props;
-const { Content } = await render(recipe);
+const { Content, headings } = await render(recipe);
 
 const lang = localeOf(recipe);
 const labels = t(lang);
@@ -42,38 +38,190 @@ const dir = categoryOf(recipe);
 const slug = slugOf(recipe);
 const label = categoryLabel(dir, lang);
 const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const home = `${base}/${lang}`;
 const githubUrl = `https://github.com/cmaneu/recipes/blob/main/${recipe.id}.md`;
+const photo = await photoOf(recipe, 480);
+
+const sections = headings.filter((heading) => heading.depth === 2);
+const ingredients = sections.find((heading) => /ingr[eé]dient/i.test(heading.text));
+const jumpTarget = ingredients ?? sections[0];
+
+// A short "For 4 people" style line is surfaced next to the title. When it is
+// the first thing under the first section, it is hidden there to avoid repeating it.
+const servingsMatch = recipe.body?.match(/^(?:For|Pour) [^\n]{0,60}?\d[^\n]{0,60}$/m)?.[0];
+const servings = servingsMatch?.trim().replace(/\s*:$/, '');
+const servingsLeadsFirstSection = Boolean(
+  servingsMatch && recipe.body?.match(/^##\s[^\n]*\n+([^\n]+)/m)?.[1].trim() === servingsMatch.trim(),
+);
 
 // Link each locale to its translation of this recipe when one exists.
 const available = new Set<Locale>(availableLocales);
 const hrefs = Object.fromEntries(
-  LOCALES.map((locale) => [
-    locale,
-    available.has(locale) ? `${base}/${locale}/${dir}/${slug}` : null,
-  ]),
+  LOCALES.map((locale) => [locale, available.has(locale) ? `${base}/${locale}/${dir}/${slug}` : null]),
 ) as Record<Locale, string | null>;
 ---
 
 <Layout title={`${title} — recipes`} description={labels.recipeMeta(title)} lang={lang} hrefs={hrefs}>
-  <p class="mb-6 text-term-dim">
-    <span class="text-term-green">visitor@kitchen</span>:<span class="text-term-cyan"
-      >~/recipes/{dir}</span
-    >$ <span class="text-term-fg">{labels.catCommand(`${slug}.md`)}</span>
-  </p>
+  <div class="detail frame">
+    <nav class="breadcrumbs" aria-label={labels.breadcrumb}>
+      <a href={`${home}#recipes`}>{labels.allRecipes}</a>
+      <span aria-hidden="true">/</span>
+      <span>{label}</span>
+    </nav>
 
-  <p class="mb-6 text-xs text-term-dim">
-    <a class="hover:text-term-green" href={`${base}/${lang}`}>{labels.cdUp}</a>
-    <span class="mx-2">·</span>
-    <span class="text-term-amber">{label}</span>
-  </p>
+    <header class:list={['recipe-hero', { 'no-photo': !photo }]}>
+      <div class="hero-copy">
+        <h1>{title}</h1>
+        {servings && <p class="servings"><span aria-hidden="true">◎</span> {servings}</p>}
+        <div class="hero-actions">
+          {
+            jumpTarget && (
+              <a class="jump" href={`#${jumpTarget.slug}`}>
+                {ingredients ? labels.jumpToIngredients : labels.jumpToRecipe}
+              </a>
+            )
+          }
+          <button class="print" type="button" data-print>
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path d="M7 8V3h10v5M7 17H4V9h16v8h-3M7 14h10v7H7zM17 11h.01" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+            <span>{labels.print}</span>
+          </button>
+        </div>
+        {photo && <PhotoDisclosure text={labels.photoDisclosure} />}
+      </div>
+      {
+        photo && (
+          <figure class="hero-photo">
+            <img src={photo} alt={title} width="480" height="480" />
+          </figure>
+        )
+      }
+    </header>
 
-  <article class="recipe">
-    <Content />
-  </article>
+    <div class:list={['recipe-layout', { 'no-rail': sections.length < 2 }]}>
+      {
+        sections.length >= 2 && (
+          <aside class="recipe-rail" aria-label={labels.recipeSections}>
+            <p class="eyebrow">{labels.inThisRecipe}</p>
+            <nav class="section-links" aria-label={labels.recipeSections}>
+              {sections.map((section, i) => (
+                <a href={`#${section.slug}`}>
+                  <span class="section-num">{String(i + 1).padStart(2, '0')}</span>
+                  <span>{section.text}</span>
+                  <span aria-hidden="true">↓</span>
+                </a>
+              ))}
+            </nav>
+          </aside>
+        )
+      }
 
-  <div class="mt-10 border-t border-term-border pt-4 text-xs text-term-dim">
-    <a class="hover:text-term-green" href={`${base}/${lang}`}>{labels.backToList}</a>
-    <span class="mx-2">·</span>
-    <a class="hover:text-term-green" href={githubUrl}>{labels.viewOnGitHub}</a>
+      <article class="recipe-content" aria-label={title} data-hide-servings={servingsLeadsFirstSection ? '' : undefined}>
+        <Content />
+        <p class="source-note"><a href={githubUrl}>{labels.viewOnGitHub}</a></p>
+      </article>
+    </div>
   </div>
 </Layout>
+
+<script>
+  document.querySelector<HTMLButtonElement>('[data-print]')?.addEventListener('click', () => window.print());
+</script>
+
+<style>
+  .detail { padding-block: 16px 64px; }
+  .breadcrumbs { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; margin-bottom: 12px; color: var(--cp-text-muted); font-size: 13px; }
+  .breadcrumbs a { color: var(--cp-accent); font-weight: 700; }
+  .recipe-hero { display: grid; grid-template-columns: 224px minmax(0, 1fr); gap: 32px; align-items: center; padding-bottom: 24px; border-bottom: 1px solid var(--cp-border); }
+  .recipe-hero.no-photo { grid-template-columns: minmax(0, 1fr); }
+  .hero-copy { grid-column: 2; grid-row: 1; min-width: 0; }
+  .no-photo .hero-copy { grid-column: 1; }
+  .hero-copy h1 { margin: 0 0 12px; font-size: clamp(34px, 4vw, 56px); letter-spacing: -.06em; }
+  .servings { display: inline-flex; align-items: center; gap: 8px; margin: 0 0 14px; color: var(--cp-text-muted); font-size: 14px; font-weight: 600; }
+  .servings span { color: var(--cp-accent); font-size: 18px; }
+  .hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; }
+  .hero-actions .jump, .hero-actions .print { min-height: 44px; padding: 9px 16px; border: 1px solid var(--cp-border); border-radius: 10px; font-size: 14px; font-weight: 700; }
+  .hero-actions .jump { display: inline-flex; align-items: center; background: var(--cp-accent); border-color: var(--cp-accent); color: var(--cp-accent-fg); text-decoration: none; }
+  .hero-actions .jump:hover { background: var(--cp-accent-hover); }
+  .hero-actions .print { display: inline-flex; align-items: center; gap: 8px; background: var(--cp-surface); }
+  .print svg { width: 18px; height: 18px; }
+  .hero-copy .photo-disclosure { max-width: 65ch; margin-top: 12px; }
+  .hero-photo { grid-column: 1; grid-row: 1; aspect-ratio: 1; margin: 0; overflow: hidden; border: 1px solid var(--cp-border); border-radius: 16px; background: var(--cp-surface-soft); }
+  .hero-photo img { width: 100%; height: 100%; object-fit: cover; }
+  .recipe-layout { display: grid; grid-template-columns: 224px minmax(0, 1fr); align-items: start; gap: 32px; padding-top: 24px; }
+  .recipe-layout.no-rail { grid-template-columns: minmax(0, 1fr); }
+  .recipe-rail { position: sticky; top: 16px; padding-right: 16px; border-right: 1px solid var(--cp-border); }
+  .recipe-rail .eyebrow { margin-bottom: 12px; }
+  .section-links { display: flex; flex-direction: column; gap: 4px; }
+  .section-links a { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 8px; min-height: 44px; padding: 8px 12px; border-radius: 10px; text-decoration: none; font-size: 15px; line-height: 1.3; }
+  .section-links a:hover { background: var(--cp-accent-soft); color: var(--cp-accent); }
+  .section-num { color: var(--cp-accent); font: 12px Consolas, "Courier New", Courier, monospace; }
+  .source-note { margin: 24px 0 0; color: var(--cp-text-muted); font-size: 13px; }
+  .source-note a { color: var(--cp-accent); font-weight: 700; }
+
+  .recipe-content { min-width: 0; max-width: 760px; font-size: 16px; line-height: 1.55; }
+  .recipe-content :global(h1) { display: none; }
+  .recipe-content :global(p:has(> img:only-child)) { display: none; }
+  .recipe-content :global(h2) { scroll-margin-top: 24px; margin: 32px 0 8px; font-size: 24px; letter-spacing: -.035em; }
+  .recipe-content :global(h2:first-of-type) { margin-top: 0; }
+  .recipe-content :global(h3) { scroll-margin-top: 24px; margin: 24px 0 6px; font-size: 18px; letter-spacing: -.02em; }
+  .recipe-content :global(p) { margin: 0 0 12px; }
+  .recipe-content :global(h2 + p) { color: var(--cp-text-muted); font-size: 14px; }
+  .recipe-content[data-hide-servings] :global(h2:first-of-type + p) { display: none; }
+  .recipe-content :global(a) { color: var(--cp-accent); }
+  .recipe-content :global(ul), .recipe-content :global(ol) { margin: 0 0 16px; padding: 0; list-style: none; }
+  .recipe-content :global(li) { position: relative; padding: 7px 0 7px 24px; border-bottom: 1px solid var(--cp-border); }
+  .recipe-content :global(li li:last-child) { border-bottom: 0; }
+  .recipe-content :global(ul > li::before) { position: absolute; top: 16px; left: 2px; width: 7px; height: 7px; border-radius: 50%; background: var(--cp-accent); content: ''; }
+  .recipe-content :global(ol) { counter-reset: step; }
+  .recipe-content :global(ol > li) { counter-increment: step; padding-block: 10px; padding-left: 32px; }
+  .recipe-content :global(ol > li::before) { position: absolute; top: 11px; left: 0; color: var(--cp-accent); font: 700 13px/1.6 Consolas, "Courier New", Courier, monospace; content: counter(step, decimal-leading-zero); }
+  .recipe-content :global(li > ul), .recipe-content :global(li > ol) { margin: 6px 0 0; }
+  .recipe-content :global(li > p) { margin: 0; }
+  .recipe-content :global(table) { width: 100%; margin: 0 0 16px; border-collapse: collapse; font-size: 14px; display: block; overflow-x: auto; }
+  .recipe-content :global(th), .recipe-content :global(td) { padding: 8px 12px; border-bottom: 1px solid var(--cp-border); text-align: left; }
+  .recipe-content :global(th) { color: var(--cp-text-muted); font-size: 12px; text-transform: uppercase; letter-spacing: .06em; }
+  .recipe-content :global(blockquote) { margin: 0 0 16px; padding: 4px 0 4px 16px; border-left: 3px solid var(--cp-accent); color: var(--cp-text-muted); }
+  .recipe-content :global(img) { max-width: 100%; height: auto; border-radius: 10px; }
+  .recipe-content :global(code) { padding: 1px 5px; border-radius: 6px; background: var(--cp-surface-soft); font-family: Consolas, "Courier New", Courier, monospace; font-size: .9em; }
+  .recipe-content :global(hr) { margin: 24px 0; border: 0; border-top: 1px solid var(--cp-border); }
+
+  @media (max-width: 860px) {
+    .recipe-layout { grid-template-columns: minmax(0, 1fr); gap: 16px; padding-top: 16px; }
+    .recipe-rail { position: static; padding: 0; border-right: 0; }
+    .recipe-rail .eyebrow { display: none; }
+    .section-links { flex-direction: row; flex-wrap: wrap; gap: 8px; }
+    .section-links a { display: inline-flex; gap: 8px; min-height: 44px; border: 1px solid var(--cp-border); background: var(--cp-bg-elevated); font-size: 14px; }
+  }
+  @media (max-width: 640px) {
+    .detail { padding-block: 12px 48px; }
+    .breadcrumbs { margin-bottom: 10px; }
+    .recipe-hero { grid-template-columns: minmax(0, 1fr) clamp(96px, 32vw, 132px); grid-template-areas: "title photo" "servings photo" "actions actions" "disclosure disclosure"; align-items: start; gap: 8px 16px; padding-bottom: 16px; }
+    .recipe-hero.no-photo { grid-template-columns: minmax(0, 1fr); grid-template-areas: "title" "servings" "actions" "disclosure"; }
+    .hero-copy { display: contents; }
+    .hero-copy h1 { grid-area: title; margin: 0; font-size: clamp(28px, 9vw, 40px); }
+    .servings { grid-area: servings; margin: 0; }
+    .hero-actions { grid-area: actions; gap: 8px; }
+    .hero-actions .jump, .hero-actions .print { padding-inline: 12px; font-size: 13px; }
+    .hero-copy .photo-disclosure { grid-area: disclosure; margin-top: 0; }
+    .hero-photo { grid-area: photo; height: auto; aspect-ratio: 1; }
+    .hero-photo img { height: 100%; }
+  }
+  @media print {
+    :global(html[data-theme]) {
+      color-scheme: light;
+      --cp-bg: #fff;
+      --cp-text: #242424;
+      --cp-text-muted: #5c5c5c;
+      --cp-accent: #05699a;
+      --cp-border: #dedede;
+    }
+    :global(.site-header), :global(.site-footer), :global(.skip-link), .breadcrumbs, .hero-actions, .photo-disclosure, .recipe-rail, .hero-photo, .source-note { display: none !important; }
+    .detail { width: 100%; padding: 0; }
+    .recipe-hero, .recipe-layout { display: block; padding-block: 12px; border: 0; }
+    .recipe-content { max-width: none; }
+    .recipe-content :global(h2), .recipe-content :global(h3) { break-after: avoid; }
+    .recipe-content :global(li) { break-inside: avoid; }
+  }
+</style>

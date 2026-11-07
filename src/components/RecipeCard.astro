@@ -1,0 +1,33 @@
+---
+interface Props {
+  title: string;
+  category: string;
+  categoryLabel: string;
+  href: string;
+  image?: string;
+  readLabel: string;
+  eager?: boolean;
+}
+const { title, category, categoryLabel, href, image, readLabel, eager = false } = Astro.props;
+---
+
+<article class="recipe-card" data-recipe data-category={category} data-search={`${title} ${categoryLabel}`}>
+  <a href={href}>
+    {
+      image ? (
+        <img src={image} alt="" width="640" height="480" loading={eager ? 'eager' : 'lazy'} decoding="async" />
+      ) : (
+        <div class="recipe-placeholder" aria-hidden="true">
+          <svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M12 8v16c0 8 12 8 12 0V8M18 8v48M42 8c-12 0-12 24 0 24s12-24 0-24Zm0 24v24" />
+          </svg>
+        </div>
+      )
+    }
+    <div class="recipe-card-body">
+      <span class="recipe-category">{categoryLabel}</span>
+      <h2>{title}</h2>
+      <span class="recipe-open" aria-hidden="true">{readLabel}</span>
+    </div>
+  </a>
+</article>
