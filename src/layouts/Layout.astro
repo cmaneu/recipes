@@ -1,21 +1,19 @@
 ---
 import '../styles/global.css';
-import LangSwitcher from '../components/LangSwitcher.astro';
-import { type Locale } from '../i18n';
+import { LOCALES, t, type Locale } from '../i18n';
 
 interface Props {
   title: string;
   description?: string;
   lang?: Locale;
+  /** Href of each translation of the current page, or null when none exists. */
   hrefs?: Record<Locale, string | null>;
 }
 
-const {
-  title,
-  description = 'Mes recettes de cuisine, en ligne de commande.',
-  lang = 'en',
-  hrefs,
-} = Astro.props;
+const { title, description, lang = 'en', hrefs } = Astro.props;
+const labels = t(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const home = `${base}/${lang}`;
 ---
 
 <!doctype html>
@@ -23,39 +21,65 @@ const {
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content={description} />
+    <meta name="description" content={description ?? labels.metaDescription} />
     <meta name="generator" content={Astro.generator} />
-    <link rel="icon" href={`${import.meta.env.BASE_URL}favicon.svg`} type="image/svg+xml" />
+    <link rel="icon" href={`${base}/favicon.svg`} type="image/svg+xml" />
     <title>{title}</title>
+    <script is:inline>
+      (() => {
+        let stored = null;
+        try { stored = localStorage.getItem('theme'); } catch {}
+        const param = new URLSearchParams(window.location.search).get('scoutTheme');
+        const theme =
+          param || stored || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+        document.documentElement.setAttribute('data-theme', theme);
+      })();
+    </script>
   </head>
-  <body class="min-h-screen px-4 py-6 sm:px-6 sm:py-10">
-    <main class="mx-auto w-full max-w-3xl">
-      <div class="overflow-hidden rounded-lg border border-term-border bg-term-panel shadow-2xl shadow-black/40">
-        <!-- Windows 11 style title bar -->
-        <div class="flex h-10 items-center border-b border-term-border bg-black/30">
-          <span class="ml-4 flex-1 truncate text-xs text-term-dim">{title}</span>
-          {hrefs && (
-            <div class="mr-3">
-              <LangSwitcher current={lang} hrefs={hrefs} />
-            </div>
-          )}
-          <div class="flex h-full" aria-hidden="true">
-            <span class="flex h-full w-11 select-none items-center justify-center text-xs text-term-dim transition-colors hover:bg-white/10">─</span>
-            <span class="flex h-full w-11 select-none items-center justify-center text-xs text-term-dim transition-colors hover:bg-white/10">□</span>
-            <span class="flex h-full w-11 select-none items-center justify-center text-xs text-term-dim transition-colors hover:bg-red-600 hover:text-white">✕</span>
-          </div>
-        </div>
-        <div class="px-5 py-6 text-sm leading-relaxed sm:px-8 sm:py-8 sm:text-base">
-          <slot />
+  <body>
+    <a class="skip-link" href="#content">{labels.skipToContent}</a>
+    <header class="site-header">
+      <div class="frame">
+        <a class="brand" href={home}><span>/</span>cmaneu <span>recipes</span></a>
+        <nav class="site-nav" aria-label={labels.mainNav}>
+          <a href={`${home}#recipes`}>{labels.navRecipes}</a>
+          <a href="https://www.maneu.net/">maneu.net ↗</a>
+        </nav>
+        <div class="header-tools">
+          <nav class="lang-links" aria-label={labels.switchLanguage}>
+            {
+              LOCALES.map((locale) => {
+                const href = hrefs?.[locale] ?? (locale === lang ? home : null);
+                return href ? (
+                  <a href={href} hreflang={locale} lang={locale} aria-current={locale === lang ? 'true' : undefined}>
+                    {locale.toUpperCase()}
+                  </a>
+                ) : (
+                  <span class="lang-unavailable" title={labels.noTranslation}>{locale.toUpperCase()}</span>
+                );
+              })
+            }
+          </nav>
+          <button type="button" data-theme-toggle aria-label={labels.toggleTheme}>◐</button>
         </div>
       </div>
-      <footer class="mt-6 text-center text-xs text-term-dim">
-        <a
-          class="hover:text-term-green"
-          href="https://github.com/cmaneu/recipes"
-          >github.com/cmaneu/recipes</a
-        >
-      </footer>
-    </main>
+    </header>
+    <main id="content" tabindex="-1"><slot /></main>
+    <footer class="site-footer">
+      <div class="frame">
+        <span>{labels.footerAbout}</span>
+        <a href="https://github.com/cmaneu/recipes">{labels.footerGitHub}</a>
+      </div>
+    </footer>
+    <script>
+      document.querySelector('[data-theme-toggle]')?.addEventListener('click', () => {
+        const root = document.documentElement;
+        const theme = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        root.dataset.theme = theme;
+        try {
+          localStorage.setItem('theme', theme);
+        } catch {}
+      });
+    </script>
   </body>
 </html>

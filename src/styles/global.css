@@ -1,131 +1,115 @@
-@import 'tailwindcss';
-
-@theme {
-  --font-mono:
-    'JetBrains Mono', 'Fira Code', ui-monospace, SFMono-Regular, 'SF Mono',
-    Menlo, Consolas, 'Liberation Mono', monospace;
-
-  --color-term-bg: #0b0e14;
-  --color-term-panel: #11151c;
-  --color-term-border: #1f2933;
-  --color-term-fg: #c5c8c6;
-  --color-term-dim: #6b7280;
-  --color-term-green: #8ae234;
-  --color-term-cyan: #34e2e2;
-  --color-term-amber: #fce94f;
-}
-
+/* Site theme: maneu.net accent on warm neutrals, light and dark. */
 :root {
+  color-scheme: light;
+  --cp-bg: #f7f4ef;
+  --cp-bg-elevated: #fcfbf8;
+  --cp-surface: #ffffff;
+  --cp-surface-soft: #f5f5f5;
+  --cp-border: #dedede;
+  --cp-border-strong: #919191;
+  --cp-text: #242424;
+  --cp-text-muted: #5c5c5c;
+  --cp-text-soft: #6f6f6f;
+  --cp-accent: #05699a;
+  --cp-accent-hover: #012a5a;
+  --cp-accent-soft: #8df8ff30;
+  --cp-accent-fg: #ffffff;
+  --cp-success: #16a34a;
+  --cp-danger: #dc2626;
+  --cp-warning: #f59e0b;
+  --cp-link: var(--cp-accent);
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.12);
+  --cp-overlay: rgba(255, 255, 255, 0.8);
+  --cp-panel: rgba(255, 255, 255, 0.86);
+  --cp-panel-strong: rgba(255, 255, 255, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.55);
+  --cp-highlight: #8df8ff57;
+}
+html[data-theme="dark"] {
   color-scheme: dark;
+  --cp-bg: #3d3b3a;
+  --cp-bg-elevated: #343231;
+  --cp-surface: #292929;
+  --cp-surface-soft: #2e2e2e;
+  --cp-border: #474747;
+  --cp-border-strong: #5f5f5f;
+  --cp-text: #dedede;
+  --cp-text-muted: #919191;
+  --cp-text-soft: #b0b0b0;
+  --cp-accent: #5cc8f2;
+  --cp-accent-hover: #a6e6ff;
+  --cp-accent-soft: #5cc8f214;
+  --cp-accent-fg: #06131f;
+  --cp-success: #4ade80;
+  --cp-danger: #f87171;
+  --cp-warning: #fbbf24;
+  --cp-link: var(--cp-accent);
+  --cp-shadow: 0 18px 48px rgba(0, 0, 0, 0.32);
+  --cp-overlay: rgba(41, 41, 41, 0.88);
+  --cp-panel: rgba(41, 41, 41, 0.72);
+  --cp-panel-strong: rgba(41, 41, 41, 0.96);
+  --cp-sheen: rgba(255, 255, 255, 0.04);
+  --cp-highlight: #1bd2dc2e;
 }
-
-html {
-  scrollbar-color: var(--color-term-border) var(--color-term-bg);
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--cp-bg); color: var(--cp-text); font-family: "Segoe UI", Aptos, Calibri, -apple-system, BlinkMacSystemFont, sans-serif; line-height: 1.6; }
+button, input, select { font: inherit; color: inherit; }
+button, a { -webkit-tap-highlight-color: var(--cp-highlight); }
+button { cursor: pointer; }
+a { color: inherit; text-underline-offset: 4px; }
+img { display: block; max-width: 100%; }
+h1, h2, h3, p { margin-top: 0; }
+h1, h2, h3 { line-height: 1.12; overflow-wrap: anywhere; }
+[hidden] { display: none !important; }
+:focus-visible { outline: 3px solid var(--cp-accent); outline-offset: 4px; }
+.frame { width: min(1184px, calc(100% - 64px)); margin-inline: auto; }
+.eyebrow { font: 700 12px/1.5 Consolas, "Courier New", Courier, monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--cp-accent); }
+.muted { color: var(--cp-text-muted); }
+.skip-link { position: absolute; top: -100px; left: 16px; padding: 12px; z-index: 10; background: var(--cp-surface); }
+.skip-link:focus { top: 12px; }
+.site-header { border-bottom: 1px solid var(--cp-border); }
+.site-header .frame { min-height: 64px; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 32px; padding-block: 8px; }
+.brand { font-weight: 800; font-size: 23px; letter-spacing: -.06em; text-decoration: none; }
+.brand span { color: var(--cp-accent); margin-right: 4px; }
+.site-nav { display: flex; flex-wrap: wrap; gap: 20px; font-size: 14px; }
+.site-nav a { text-decoration: none; }
+.site-nav a:hover { color: var(--cp-accent); }
+.header-tools, .lang-links { margin-left: auto; display: flex; gap: 8px; }
+.visually-hidden { position: absolute; width: 1px; height: 1px; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.header-tools a, .header-tools .lang-unavailable { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.header-tools a:hover { color: var(--cp-accent); }
+.header-tools .lang-unavailable { opacity: .45; text-decoration: line-through; }
+.header-tools button, .header-tools a, .header-tools .lang-unavailable { min-width: 44px; min-height: 44px; padding: 8px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-bg-elevated); font-size: 12px; font-weight: 700; }
+.header-tools [aria-current="true"] { color: var(--cp-accent); border-color: var(--cp-accent); }
+.site-footer { padding-block: 32px; border-top: 1px solid var(--cp-border); font-size: 13px; color: var(--cp-text-muted); }
+.site-footer .frame { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; }
+.recipe-card { min-width: 0; border: 1px solid var(--cp-border); border-radius: 10px; overflow: hidden; background: var(--cp-surface); }
+.recipe-card a { display: flex; flex-direction: column; height: 100%; text-decoration: none; }
+.recipe-card a:hover h2 { color: var(--cp-accent); }
+.recipe-card img { width: 100%; height: auto; aspect-ratio: 4/3; object-fit: cover; }
+.recipe-placeholder { aspect-ratio: 4/3; display: flex; flex-direction: column; justify-content: space-between; padding: 24px; background: var(--cp-accent-soft); color: var(--cp-accent); }
+.recipe-placeholder svg { width: 56px; height: 56px; }
+.recipe-card-body { flex: 1; display: flex; flex-direction: column; padding: 16px; }
+.recipe-card h2 { margin-block: 6px 12px; font-size: 18px; letter-spacing: -.035em; }
+.recipe-category { color: var(--cp-text-muted); font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: .08em; }
+.recipe-open { margin-top: auto; color: var(--cp-accent); font-size: 13px; }
+.recipe-toolbar { display: flex; flex-wrap: wrap; gap: 16px; align-items: center; margin-block: 24px; }
+.recipe-search { flex: 1; min-width: min(240px, 100%); }
+.recipe-search input { width: 100%; min-height: 48px; padding: 12px 16px; border: 1px solid var(--cp-border); border-radius: 10px; background: var(--cp-surface); }
+.empty-state { padding: 32px; border: 1px dashed var(--cp-border-strong); border-radius: 16px; color: var(--cp-text-muted); }
+@media (max-width: 640px) {
+  .frame { width: calc(100% - 32px); }
+  .site-header .frame { gap: 4px 12px; }
+  .site-nav { order: 3; width: 100%; gap: 20px; }
+  .brand { font-size: 21px; }
+  .recipe-card-body { padding: 16px; }
+  .recipe-toolbar { align-items: stretch; }
+  .recipe-search { flex-basis: 100%; }
 }
-
-body {
-  background-color: var(--color-term-bg);
-  color: var(--color-term-fg);
-  font-family: var(--font-mono);
+@media (max-width: 360px) {
+  .brand { font-size: 17px; }
+  .header-tools { gap: 4px; }
 }
-
-/* Rendered recipe markdown content. */
-.recipe h1 {
-  color: var(--color-term-green);
-  font-size: 1.5rem;
-  font-weight: 700;
-  margin-bottom: 1rem;
-}
-
-.recipe h2 {
-  color: var(--color-term-amber);
-  font-size: 1.15rem;
-  font-weight: 600;
-  margin-top: 1.75rem;
-  margin-bottom: 0.75rem;
-}
-
-.recipe h2::before {
-  content: '## ';
-  color: var(--color-term-dim);
-}
-
-.recipe p {
-  margin: 0.75rem 0;
-}
-
-.recipe ul,
-.recipe ol {
-  margin: 0.75rem 0;
-  padding-left: 1.25rem;
-}
-
-.recipe ul {
-  list-style: none;
-  padding-left: 0;
-}
-
-.recipe ul > li {
-  position: relative;
-  padding-left: 1.5rem;
-}
-
-.recipe ul > li::before {
-  content: '-';
-  position: absolute;
-  left: 0.25rem;
-  color: var(--color-term-green);
-}
-
-.recipe ol {
-  list-style: decimal;
-}
-
-.recipe li {
-  margin: 0.35rem 0;
-}
-
-.recipe a {
-  color: var(--color-term-cyan);
-  text-decoration: underline;
-  text-underline-offset: 4px;
-}
-
-.recipe a:hover {
-  color: var(--color-term-green);
-}
-
-.recipe img {
-  margin: 1.25rem 0;
-  max-width: 100%;
-  height: auto;
-  border-radius: 0.5rem;
-  border: 1px solid var(--color-term-border);
-}
-
-.recipe code {
-  background: rgba(255, 255, 255, 0.06);
-  padding: 0.1rem 0.35rem;
-  border-radius: 0.25rem;
-}
-
-.recipe blockquote {
-  border-left: 2px solid var(--color-term-border);
-  padding-left: 1rem;
-  color: var(--color-term-dim);
-  margin: 1rem 0;
-}
-
-/* Blinking terminal cursor used after prompts. */
-.cursor::after {
-  content: '▋';
-  margin-left: 0.15rem;
-  color: var(--color-term-green);
-  animation: blink 1s step-end infinite;
-}
-
-@keyframes blink {
-  50% {
-    opacity: 0;
-  }
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
 }

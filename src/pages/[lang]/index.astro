@@ -1,6 +1,8 @@
 ---
 import Layout from '../../layouts/Layout.astro';
+import RecipeCard from '../../components/RecipeCard.astro';
 import { getRecipesByCategory, recipePath } from '../../lib/recipes';
+import { photoOf } from '../../lib/photos';
 import { LOCALES, t, type Locale } from '../../i18n';
 
 export function getStaticPaths() {
@@ -9,10 +11,31 @@ export function getStaticPaths() {
 
 const lang = Astro.params.lang as Locale;
 const labels = t(lang);
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
 
 const categories = await getRecipesByCategory(lang);
-const total = categories.reduce((sum, c) => sum + c.recipes.length, 0);
-const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const recipes = (
+  await Promise.all(
+    categories.flatMap((category) =>
+      category.recipes.map(async ({ recipe, title }) => ({
+        title,
+        category: category.dir,
+        categoryLabel: category.label[lang],
+        href: `${base}/${recipePath(recipe)}`,
+        image: await photoOf(recipe, 640),
+      })),
+    ),
+  )
+).sort((a, b) => Number(Boolean(b.image)) - Number(Boolean(a.image)));
+const total = recipes.length;
+const rail = categories.map((category, i) => ({
+  dir: category.dir,
+  label: category.label[lang],
+  count: category.recipes.length,
+  num: String(i + 1).padStart(2, '0'),
+}));
+const status = (visible: number) =>
+  labels.statusTemplate.replace('{visible}', String(visible)).replace('{total}', String(total));
 
 // The listing exists in every language, so the switcher always links across.
 const hrefs = Object.fromEntries(
@@ -20,54 +43,128 @@ const hrefs = Object.fromEntries(
 ) as Record<Locale, string | null>;
 ---
 
-<Layout title={labels.siteTitle} description={labels.metaDescription} lang={lang} hrefs={hrefs}>
-  <header class="mb-6">
-    <pre class="text-term-green whitespace-pre-wrap leading-tight">{`                _
-  _ __ ___  ___(_)_ __   ___  ___
- | '__/ _ \\/ __| | '_ \\ / _ \\/ __|
- | | |  __/ (__| | |_) |  __/\\__ \\
- |_|  \\___|\\___|_| .__/ \\___||___/
-                 |_|`}</pre>
-    <p class="mt-3 text-term-dim">{labels.tagline(total)}</p>
-  </header>
+<Layout title={labels.siteTitle} lang={lang} hrefs={hrefs}>
+  <div class="frame cookbook">
+    <header class="cb-intro">
+      <p class="eyebrow">01 / {labels.eyebrow}</p>
+      <h1>{labels.heading}</h1>
+      <p class="muted">{labels.intro}</p>
+    </header>
 
-  <p class="mb-6 text-term-dim">
-    <span class="text-term-green">visitor@kitchen</span>:<span class="text-term-cyan"
-      >{labels.listPath}</span
-    >$ <span class="text-term-fg">{labels.listCommand}</span>
-  </p>
+    <div class="cb-layout">
+      <nav class="cb-rail" aria-label={labels.categories}>
+        <p class="eyebrow cb-rail-title">{labels.categories}</p>
+        <div class="cb-rail-list" role="group" aria-label={labels.categories}>
+          <button type="button" data-category-filter="all" aria-pressed="true">
+            <span class="cb-num">00</span>
+            <span class="cb-label">{labels.all}</span>
+            <span class="cb-count">{total}</span>
+          </button>
+          {
+            rail.map((item) => (
+              <button type="button" data-category-filter={item.dir} aria-pressed="false">
+                <span class="cb-num">{item.num}</span>
+                <span class="cb-label">{item.label}</span>
+                <span class="cb-count">{item.count}</span>
+              </button>
+            ))
+          }
+        </div>
+      </nav>
 
-  <div class="space-y-7">
-    {
-      categories.map((category) => (
-        <section>
-          <h2 class="mb-2 text-term-amber">
-            <span class="text-term-dim">drwxr-xr-x</span> {category.dir}/
-            <span class="text-term-dim text-xs">
-              {labels.catCount(category.label[lang], category.recipes.length)}
-            </span>
-          </h2>
-          <ul class="space-y-1">
-            {category.recipes.map(({ recipe, title }) => (
-              <li class="flex items-baseline gap-2">
-                <span class="text-term-green select-none">-rw-r--r--</span>
-                <a
-                  class="text-term-cyan underline-offset-4 hover:text-term-green hover:underline"
-                  href={`${base}/${recipePath(recipe)}`}
-                >
-                  {title}
-                </a>
-              </li>
-            ))}
-          </ul>
-        </section>
-      ))
-    }
+      <section id="recipes" class="cb-catalog" aria-label={labels.navRecipes}>
+        <div class="recipe-toolbar">
+          <label class="recipe-search">
+            <span class="visually-hidden">{labels.searchLabel}</span>
+            <input type="search" data-recipe-search placeholder={labels.searchPlaceholder} />
+          </label>
+        </div>
+        <p class="muted cb-status" data-recipe-status data-template={labels.statusTemplate} aria-live="polite">
+          {status(total)}
+        </p>
+        <p data-empty-state hidden class="empty-state">{labels.emptyState}</p>
+        <div class="cb-grid">
+          {recipes.map((recipe, index) => <RecipeCard {...recipe} readLabel={labels.readRecipe} eager={index < 3} />)}
+        </div>
+      </section>
+    </div>
   </div>
-
-  <p class="mt-8 text-term-dim">
-    <span class="text-term-green">visitor@kitchen</span>:<span class="text-term-cyan"
-      >{labels.listPath}</span
-    >$ <span class="cursor"></span>
-  </p>
 </Layout>
+
+<script>
+  const normalize = (text: string) =>
+    text.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim();
+  const cards = [...document.querySelectorAll<HTMLElement>('[data-recipe]')];
+  const search = document.querySelector<HTMLInputElement>('[data-recipe-search]');
+  const status = document.querySelector<HTMLElement>('[data-recipe-status]');
+  const empty = document.querySelector<HTMLElement>('[data-empty-state]');
+  const filters = [...document.querySelectorAll<HTMLButtonElement>('[data-category-filter]')];
+  let category = 'all';
+
+  function filterRecipes() {
+    const terms = normalize(search?.value ?? '').split(/\s+/).filter(Boolean);
+    let visible = 0;
+    for (const card of cards) {
+      const text = normalize(card.dataset.search ?? '');
+      card.hidden =
+        (category !== 'all' && card.dataset.category !== category) ||
+        !terms.every((term) => text.includes(term));
+      if (!card.hidden) visible++;
+    }
+    if (status) {
+      status.textContent = (status.dataset.template ?? '')
+        .replace('{visible}', String(visible))
+        .replace('{total}', String(cards.length));
+    }
+    if (empty) empty.hidden = visible > 0;
+  }
+
+  search?.addEventListener('input', filterRecipes);
+  for (const button of filters) {
+    button.addEventListener('click', () => {
+      category = button.dataset.categoryFilter ?? 'all';
+      for (const item of filters) {
+        item.setAttribute('aria-pressed', String(item === button));
+      }
+      filterRecipes();
+    });
+  }
+</script>
+
+<style>
+  .cookbook { padding-block: 24px 80px; }
+  .cb-intro { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: end; column-gap: 32px; padding-bottom: 16px; border-bottom: 1px solid var(--cp-border); margin-bottom: 16px; }
+  .cb-intro .eyebrow { grid-column: 1 / -1; margin: 0 0 4px; }
+  .cb-intro h1 { font-size: clamp(30px, 3vw, 40px); letter-spacing: -.05em; margin: 0; }
+  .cb-intro p:last-child { margin: 0; max-width: 48ch; font-size: 15px; line-height: 1.45; }
+  .cb-layout { display: grid; grid-template-columns: 248px minmax(0, 1fr); gap: 40px; align-items: start; }
+  .cb-rail { position: sticky; top: 16px; padding-right: 24px; border-right: 1px solid var(--cp-border); }
+  .cb-rail-title { margin-bottom: 12px; }
+  .cb-rail-list { display: flex; flex-direction: column; gap: 4px; }
+  .cb-rail-list button { display: grid; grid-template-columns: 28px 1fr auto; align-items: center; gap: 8px; min-height: 48px; padding: 8px 12px; text-align: left; border: 1px solid transparent; border-radius: 10px; background: transparent; font-size: 15px; }
+  .cb-rail-list button:hover { background: var(--cp-accent-soft); }
+  .cb-rail-list button[aria-pressed="true"] { border-color: var(--cp-accent); background: var(--cp-accent); color: var(--cp-accent-fg); }
+  .cb-num { font: 12px Consolas, "Courier New", Courier, monospace; opacity: .7; }
+  .cb-count { min-width: 28px; padding: 2px 8px; border-radius: 999px; background: var(--cp-surface-soft); color: var(--cp-text-muted); font-size: 12px; font-weight: 700; text-align: center; }
+  .cb-rail-list button[aria-pressed="true"] .cb-count { background: var(--cp-accent-fg); color: var(--cp-accent); }
+  .cb-catalog .recipe-toolbar { margin-block: 0 8px; }
+  .cb-catalog .recipe-search input { min-height: 56px; font-size: 17px; border-color: var(--cp-border-strong); }
+  .cb-status { margin-bottom: 12px; font-size: 13px; }
+  .cb-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+  @media (max-width: 1100px) { .cb-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+  @media (max-width: 860px) {
+    .cb-intro { grid-template-columns: minmax(0, 1fr); row-gap: 6px; }
+    .cb-intro .eyebrow { margin-bottom: 0; }
+    .cb-layout { grid-template-columns: minmax(0, 1fr); gap: 16px; }
+    .cb-rail { position: static; padding: 0 0 12px; border-right: 0; border-bottom: 1px solid var(--cp-border); }
+    .cb-rail-title { margin-bottom: 8px; }
+    .cb-rail-list { flex-direction: row; flex-wrap: wrap; gap: 6px; }
+    .cb-rail-list button { display: inline-flex; gap: 8px; min-height: 44px; border-color: var(--cp-border); background: var(--cp-bg-elevated); font-size: 14px; }
+    .cb-num { display: none; }
+  }
+  @media (max-width: 560px) {
+    .cookbook { padding-block: 20px 56px; }
+    .cb-intro h1 { font-size: clamp(28px, 8vw, 32px); }
+    .cb-grid { grid-template-columns: minmax(0, 1fr); }
+  }
+</style>

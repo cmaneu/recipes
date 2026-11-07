@@ -2,7 +2,7 @@
 
 Voici quelques unes de "mes" recettes de cuisine. C'est surtout là pour moi, mais si vous voulez proposer une recette, n'hésitez pas !
 
-👉 **Site web :** [cmaneu.github.io/recipes](https://cmaneu.github.io/recipes) — une version « ligne de commande » de ces recettes, construite avec [Astro](https://astro.build) et [Tailwind CSS](https://tailwindcss.com). Le site est disponible en **anglais** ([/en](https://cmaneu.github.io/recipes/en)) et en **français** ([/fr](https://cmaneu.github.io/recipes/fr)), l'anglais étant la langue par défaut.
+👉 **Site web :** [cmaneu.github.io/recipes](https://cmaneu.github.io/recipes) — un carnet de recettes en cartes photo, inspiré de [maneu.net](https://www.maneu.net/) et construit avec [Astro](https://astro.build). Le site est disponible en **anglais** ([/en](https://cmaneu.github.io/recipes/en)) et en **français** ([/fr](https://cmaneu.github.io/recipes/fr)), l'anglais étant la langue par défaut.
 
 Vous pouvez aussi parcourir directement les recettes ci-dessous sur GitHub. Chaque recette est disponible en français (`fr/`) et en anglais (`en/`).
 
@@ -66,6 +66,12 @@ npm run preview  # prévisualiser le build
 ```
 
 > Pour activer le déploiement, réglez **Settings → Pages → Build and deployment → Source** sur **GitHub Actions**.
+
+### Photos
+
+Le site associe automatiquement une photo à chaque recette en cherchant `<catégorie>/<slug>.jpg` (ou `.jpeg`, `.png`, `.webp`), par exemple `plats/pad-thai.jpg` pour `plats/fr/pad-thai.md`. À défaut, il utilise la première image distante du Markdown. Les photos sont converties en WebP au build.
+
+> La plupart des photos de plats (assiette sur table en bambou) sont **générées par IA** pour illustrer les recettes qui n'avaient pas de photo. Remplacez simplement le fichier par une vraie photo pour la mettre à jour.
 
 ## Todo
 
